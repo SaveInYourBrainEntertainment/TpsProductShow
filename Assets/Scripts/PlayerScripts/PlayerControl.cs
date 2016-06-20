@@ -22,7 +22,7 @@ public class PlayerControl : MonoBehaviour
 
 	private Vector3 lastDirection;
 
-	//private Animator anim;
+	private Animator anim;
 	private int speedFloat;
 	private int jumpBool;
 	private int hFloat;
@@ -49,7 +49,7 @@ public class PlayerControl : MonoBehaviour
 
 	void Awake()
 	{
-		/*anim = GetComponent<Animator> ();*/
+		anim = GetComponent<Animator> ();
 		cameraTransform = Camera.main.transform;
 
 		speedFloat = Animator.StringToHash("Speed");
@@ -82,15 +82,15 @@ public class PlayerControl : MonoBehaviour
 	}
 
 	void FixedUpdate()
-	{/*
+	{
 		anim.SetBool (aimBool, IsAiming());
 		anim.SetFloat(hFloat, h);
 		anim.SetFloat(vFloat, v);
 		
 		// Fly
-		anim.SetBool (flyBool, fly);*/
+		anim.SetBool (flyBool, fly);
 		GetComponent<Rigidbody>().useGravity = !fly;
-		/*anim.SetBool (groundedBool, IsGrounded ()); */
+		anim.SetBool (groundedBool, IsGrounded ()); 
 		if(fly)
 			FlyManagement(h,v);
 
@@ -112,13 +112,13 @@ public class PlayerControl : MonoBehaviour
 	{
 		if (GetComponent<Rigidbody>().velocity.y < 10) // already jumped
 		{
-			/*anim.SetBool (jumpBool, false);*/
+			anim.SetBool (jumpBool, false);
 			if(timeToNextJump > 0)
 				timeToNextJump -= Time.deltaTime;
 		}
 		if (Input.GetButtonDown ("Jump"))
 		{
-			/*anim.SetBool(jumpBool, true);*/
+			anim.SetBool(jumpBool, true);
 			if(speed > 0 && timeToNextJump <= 0 && !aim)
 			{
 				GetComponent<Rigidbody>().velocity = new Vector3(0, jumpHeight, 0);
@@ -146,12 +146,12 @@ public class PlayerControl : MonoBehaviour
 				speed = walkSpeed;
 			}
 
-			/*anim.SetFloat(speedFloat, speed, speedDampTime, Time.deltaTime);*/
+			anim.SetFloat(speedFloat, speed, speedDampTime, Time.deltaTime);
 		}
 		else
 		{
 			speed = 0f;
-			/*anim.SetFloat(speedFloat, 0f);*/
+			anim.SetFloat(speedFloat, 0f);
 		}
 		GetComponent<Rigidbody>().AddForce(Vector3.forward*speed);
 	}
